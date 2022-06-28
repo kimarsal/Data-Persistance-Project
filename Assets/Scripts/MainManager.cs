@@ -25,7 +25,7 @@ public class MainManager : MonoBehaviour
     {
         if(PersistanceManager.Instance != null && PersistanceManager.Instance.highScore.name != null)
         {
-            HighScoreText.text = "Best Score: " + PersistanceManager.Instance.highScore.name + " : " + PersistanceManager.Instance.highScore.score;
+            HighScoreText.text = "Best Score : " + PersistanceManager.Instance.highScore.name + " : " + PersistanceManager.Instance.highScore.score;
         }
 
         const float step = 0.6f;
@@ -80,9 +80,12 @@ public class MainManager : MonoBehaviour
         GameOverText.SetActive(true);
         if (PersistanceManager.Instance != null && PersistanceManager.Instance.playerName != null)
         {
-            PersistanceManager.Instance.highScore.name = PersistanceManager.Instance.playerName;
-            PersistanceManager.Instance.highScore.score = m_Points;
-            PersistanceManager.Instance.SaveHighScore();
+            if(PersistanceManager.Instance.highScore.name == null || PersistanceManager.Instance.highScore.score < m_Points)
+            {
+                PersistanceManager.Instance.highScore.name = PersistanceManager.Instance.playerName;
+                PersistanceManager.Instance.highScore.score = m_Points;
+                PersistanceManager.Instance.SaveHighScore();
+            }
         }
     }
 }

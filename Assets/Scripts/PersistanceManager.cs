@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using TMPro;
 
 public class PersistanceManager : MonoBehaviour
 {
+    [System.Serializable]
     public struct HighScore
     {
         public string name;
@@ -14,6 +16,7 @@ public class PersistanceManager : MonoBehaviour
     public static PersistanceManager Instance;
     public HighScore highScore;
     public string playerName;
+    public TextMeshProUGUI titleText;
 
     private void Awake()
     {
@@ -28,6 +31,11 @@ public class PersistanceManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         LoadHighScore();
+
+        if (highScore.name != null)
+        {
+            titleText.text = "Best Score : " + highScore.name + " : " + highScore.score;
+        }
     }
 
     [System.Serializable]
